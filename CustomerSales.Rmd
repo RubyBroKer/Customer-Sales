@@ -1,0 +1,58 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+```{r}
+dataf=read.csv("salesdata.csv")
+head(dataf,10)
+```
+
+```{r}
+str(dataf)
+```
+
+```{r}
+dataf=subset(dataf,select = -c(order_id,item_id,sku,User.Name,Zip,City,Place.Name,Phone.No.,SSN,Customer.Since,E.Mail,full_name,Last.Name,Middle.Initial,First.Name,Name.Prefix,ref_num,cust_id))
+```
+
+```{r}
+head(dataf,10)
+```
+
+```{r}
+for (i in colnames(dataf)){
+  cat("Number of Missing values in ",i,"column:",sum(is.na(dataf[[i]])),'\n')
+}
+```
+
+```{r}
+summary(dataf$price)
+```
+
+```{r}
+dataf$price[is.na(dataf$price)]<-mean(dataf$price,na.rm=TRUE)
+```
+
+```{r}
+summary(dataf$value)
+```
+
+```{r}
+dataf$value[is.na(dataf$value)]<-mean(dataf$value,na.rm=T)
+```
+
+```{r}
+summary(dataf$total)
+```
+
+```{r}
+dataf$total[is.na(dataf$total)]<-mean(dataf$total,na.rm=T)
+```
+
+```{r}
+write.csv(dataf,"Salespreprocessed.csv")
+```
+
